@@ -1,0 +1,5 @@
+pyowm
+pyTelegramBotAPI
+rapidfuzz
+deep-translator
+Flask
