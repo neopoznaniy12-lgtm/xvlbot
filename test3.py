@@ -52,7 +52,13 @@ translator = GoogleTranslator(source='auto', target='en')
 cache = {}
 
 # --- Flask сервер для WebApp ---
-app = Flask(__name__)
+from flask import Flask, send_from_directory
+app = Flask('name')
+
+@app.route('/')
+def serve_index():
+    return send_from_directory('.', 'index.html')
+
 
 @app.route('/api/weather')
 def api_weather():
@@ -84,7 +90,7 @@ def send_start(message):
 @bot.message_handler(commands=['weather'])
 def webapp_start(message):
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
-    web_app = WebAppInfo(url="https://your-domain.com")  # заменишь на свой URL
+    web_app = WebAppInfo(url="https://xvlbot.onrender.com")  # заменишь на свой URL
     markup.add(KeyboardButton("Открыть приложение", web_app=web_app))
     bot.send_message(message.chat.id, "Нажми, чтобы открыть приложение:", reply_markup=markup)
 
@@ -153,3 +159,4 @@ def send_echo(message):
 if __name__ == '__main__':
     Thread(target=run_flask).start()
     bot.infinity_polling()
+
